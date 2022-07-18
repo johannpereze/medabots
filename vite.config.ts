@@ -1,23 +1,23 @@
 import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
+// import { resolve } from 'path'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { UserConfig } from 'vite'
 import Checker from 'vite-plugin-checker'
 
-function pathResolve(dir: string) {
-  return resolve(__dirname, '.', dir)
-}
+// function pathResolve(dir: string) {
+//   return resolve(__dirname, '.', dir)
+// }
 
 const shouldAnalyze = process.env.ANALYZE
 
 const config: UserConfig = {
   resolve: {
-    alias: [
-      {
-        find: /@\//,
-        replacement: `${pathResolve('src')}/`
-      }
-    ]
+    // alias: [
+    //   {
+    //     find: /@\//,
+    //     replacement: `${pathResolve('src')}/`
+    //   }
+    // ]
   },
   build: {
     rollupOptions: {

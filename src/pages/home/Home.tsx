@@ -1,9 +1,9 @@
-import TodoForm from '../../components/todoForm/TodoForm'
+import MedabotSprite from '../../components/medabotSprite/MedabotSprite'
 
 export default function Home() {
   return (
     <>
-      <TodoForm />
+      <MedabotSprite scale={4} />
     </>
   )
 }
