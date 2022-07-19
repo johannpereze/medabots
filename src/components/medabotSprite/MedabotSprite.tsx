@@ -2,7 +2,26 @@ import styled from '@emotion/styled'
 import { Box } from '@mui/material'
 import { width as mainSpritesWidth } from '../../static/images/mainSprites.json'
 
-const spritePosition = {
+interface Sprite {
+  head: Position
+  upperBody: Position
+  lowerBody: Position
+  upperArmRight: Position
+  upperArmLeft: Position
+  lowerArmRight: Position
+  lowerArmLeft: Position
+  upperLegRight: Position
+  upperLegLeft: Position
+  lowerLegRight: Position
+  lowerLegLeft: Position
+}
+interface Position {
+  width: number
+  height: number
+  x: number
+  y: number
+}
+const spritePosition: Sprite = {
   head: {
     width: 30,
     height: 29,
@@ -17,9 +36,9 @@ const spritePosition = {
   },
   lowerBody: {
     width: 16,
-    height: 14,
-    x: 583,
-    y: 1113
+    height: 16,
+    x: 586,
+    y: 1097
   },
   upperArmRight: {
     width: 16,
@@ -44,6 +63,30 @@ const spritePosition = {
     height: 21,
     x: 562,
     y: 1097
+  },
+  upperLegRight: {
+    width: 8,
+    height: 13,
+    x: 589,
+    y: 1078
+  },
+  upperLegLeft: {
+    width: 8,
+    height: 13,
+    x: 589,
+    y: 1078
+  },
+  lowerLegRight: {
+    width: 19,
+    height: 21,
+    x: 588,
+    y: 1064
+  },
+  lowerLegLeft: {
+    width: 21,
+    height: 21,
+    x: 557,
+    y: 1067
   }
 }
 
@@ -59,6 +102,7 @@ export default function MedabotSprite({ scale = 1 }: MedabotSpriteProps) {
       ${spritePosition.head.y * scale}px;
     image-rendering: pixelated;
     background-size: ${mainSpritesWidth * scale}px;
+    position: absolute;
   `
   const UpperBody = styled.div`
     height: ${spritePosition.upperBody.height * scale}px;
@@ -67,6 +111,18 @@ export default function MedabotSprite({ scale = 1 }: MedabotSpriteProps) {
       ${spritePosition.upperBody.y * scale}px;
     image-rendering: pixelated;
     background-size: ${mainSpritesWidth * scale}px;
+    position: absolute;
+    top: ${spritePosition.head.height * scale}px;
+  `
+  const LowerBody = styled.div`
+    height: ${spritePosition.lowerBody.height * scale}px;
+    width: ${spritePosition.lowerBody.width * scale}px;
+    background: url('../../src/static/images/mainSprites.png') ${spritePosition.lowerBody.x * scale}px
+      ${spritePosition.lowerBody.y * scale}px;
+    image-rendering: pixelated;
+    background-size: ${mainSpritesWidth * scale}px;
+    position: absolute;
+    top: ${(spritePosition.head.height + spritePosition.upperBody.height) * scale}px;
   `
   const UpperArmRight = styled.div`
     height: ${spritePosition.upperArmRight.height * scale}px;
@@ -75,6 +131,8 @@ export default function MedabotSprite({ scale = 1 }: MedabotSpriteProps) {
       ${spritePosition.upperArmRight.y * scale}px;
     image-rendering: pixelated;
     background-size: ${mainSpritesWidth * scale}px;
+    position: absolute;
+    top: ${(spritePosition.head.height + spritePosition.upperBody.height + spritePosition.lowerBody.height) * scale}px;
   `
   const UpperArmLeft = styled.div`
     height: ${spritePosition.upperArmLeft.height * scale}px;
@@ -100,31 +158,77 @@ export default function MedabotSprite({ scale = 1 }: MedabotSpriteProps) {
     image-rendering: pixelated;
     background-size: ${mainSpritesWidth * scale}px;
   `
-  const LowerBody = styled.div`
-    height: ${spritePosition.lowerBody.height * scale}px;
-    width: ${spritePosition.lowerBody.width * scale}px;
-    background: url('../../src/static/images/mainSprites.png') ${spritePosition.lowerBody.x * scale}px
-      ${spritePosition.lowerBody.y * scale}px;
+  const UpperLegRight = styled.div`
+    height: ${spritePosition.upperLegRight.height * scale}px;
+    width: ${spritePosition.upperLegRight.width * scale}px;
+    background: url('../../src/static/images/mainSprites.png') ${spritePosition.upperLegRight.x * scale}px
+      ${spritePosition.upperLegRight.y * scale}px;
+    image-rendering: pixelated;
+    background-size: ${mainSpritesWidth * scale}px;
+    position: absolute;
+    top: ${(spritePosition.head.height + spritePosition.upperBody.height + spritePosition.lowerBody.height) * scale}px;
+  `
+  const UpperLegLeft = styled.div`
+    height: ${spritePosition.upperLegLeft.height * scale}px;
+    width: ${spritePosition.upperLegLeft.width * scale}px;
+    background: url('../../src/static/images/mainSprites.png') ${spritePosition.upperLegLeft.x * scale}px
+      ${spritePosition.upperLegLeft.y * scale}px;
     image-rendering: pixelated;
     background-size: ${mainSpritesWidth * scale}px;
   `
+  const LowerLegRight = styled.div`
+    height: ${spritePosition.lowerLegRight.height * scale}px;
+    width: ${spritePosition.lowerLegRight.width * scale}px;
+    background: url('../../src/static/images/mainSprites.png') ${spritePosition.lowerLegRight.x * scale}px
+      ${spritePosition.lowerLegRight.y * scale}px;
+    image-rendering: pixelated;
+    background-size: ${mainSpritesWidth * scale}px;
+    position: absolute;
+    top: ${(spritePosition.head.height +
+      spritePosition.upperBody.height +
+      spritePosition.lowerBody.height +
+      spritePosition.upperLegRight.height) *
+    scale}px;
+  `
+  const LowerLegLeft = styled.div`
+    height: ${spritePosition.lowerLegLeft.height * scale}px;
+    width: ${spritePosition.lowerLegLeft.width * scale}px;
+    background: url('../../src/static/images/mainSprites.png') ${spritePosition.lowerLegLeft.x * scale}px
+      ${spritePosition.lowerLegLeft.y * scale}px;
+    image-rendering: pixelated;
+    background-size: ${mainSpritesWidth * scale}px;
+  `
+
+  const calculateWidthHeight = (medabotSprite: Sprite, medabotScale: number) => {
+    const height =
+      (medabotSprite.head.height +
+        medabotSprite.upperBody.height +
+        medabotSprite.lowerBody.height +
+        medabotSprite.upperLegRight.height +
+        medabotSprite.lowerLegRight.height) *
+      medabotScale
+    const width = 45 * medabotScale
+    return { height, width }
+  }
+
+  const { height, width } = calculateWidthHeight(spritePosition, scale)
+
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      {/* TODO: make this margin from the data */}
-      <Box sx={{ ml: `${17 * scale}px` }}>
+    <>
+      <Box sx={{ display: 'flex', flexDirection: 'column', ml: 4, position: 'relative', height, width }}>
         <Head />
-      </Box>
-      <Box sx={{ display: 'flex' }}>
-        <UpperArmRight />
+        {/* <UpperArmLeft /> */}
         <UpperBody />
-        <UpperArmLeft />
-      </Box>
-      <Box sx={{ display: 'flex' }}>
-        <LowerArmRight />
+        {/* <UpperArmRight /> */}
+        {/* <LowerArmRight /> */}
         <LowerBody />
-        <LowerArmLeft />
+        {/* <LowerArmLeft /> */}
+        <UpperLegRight />
+        {/* <UpperLegLeft /> */}
+        <LowerLegRight />
+        {/* <LowerLegLeft /> */}
       </Box>
-    </Box>
+    </>
   )
 }
 
