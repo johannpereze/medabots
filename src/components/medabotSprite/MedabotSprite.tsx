@@ -22,17 +22,28 @@ interface Position {
   y: number
   top: number
   left: number
+  animation: number
 }
 
 const spriteSize = { width: 45, height: 83 }
 const spritePosition: Sprite = {
+  upperLegLeft: {
+    width: 8,
+    height: 13,
+    x: 589,
+    y: 1078,
+    top: 49,
+    left: 21,
+    animation: 1
+  },
   lowerLegLeft: {
     width: 21,
     height: 21,
     x: 557,
     y: 1067,
     top: 62,
-    left: 19
+    left: 19,
+    animation: 0
   },
   upperArmLeft: {
     width: 10,
@@ -40,7 +51,8 @@ const spritePosition: Sprite = {
     x: 548,
     y: 1118,
     top: 21,
-    left: 22
+    left: 22,
+    animation: 3
   },
   lowerArmLeft: {
     width: 17,
@@ -48,23 +60,18 @@ const spritePosition: Sprite = {
     x: 562,
     y: 1097,
     top: 41,
-    left: 28
+    left: 28,
+    animation: 5
   },
-  upperLegLeft: {
-    width: 8,
-    height: 13,
-    x: 589,
-    y: 1078,
-    top: 49,
-    left: 21
-  },
+
   lowerBody: {
     width: 16,
     height: 16,
     x: 586,
     y: 1097,
     top: 43,
-    left: 11
+    left: 11,
+    animation: 4
   },
   upperLegRight: {
     width: 8,
@@ -72,7 +79,8 @@ const spritePosition: Sprite = {
     x: 589,
     y: 1078,
     top: 49,
-    left: 12
+    left: 12,
+    animation: 1
   },
 
   lowerLegRight: {
@@ -81,7 +89,18 @@ const spritePosition: Sprite = {
     x: 588,
     y: 1064,
     top: 62,
-    left: 9
+    left: 9,
+    animation: 0
+  },
+
+  upperBody: {
+    width: 16,
+    height: 14,
+    x: 583,
+    y: 1113,
+    top: 29,
+    left: 11,
+    animation: 2
   },
   head: {
     width: 30,
@@ -89,15 +108,8 @@ const spritePosition: Sprite = {
     x: 590,
     y: 1147,
     top: 0,
-    left: 11
-  },
-  upperBody: {
-    width: 16,
-    height: 14,
-    x: 583,
-    y: 1113,
-    top: 29,
-    left: 11
+    left: 11,
+    animation: 1
   },
 
   upperArmRight: {
@@ -106,7 +118,8 @@ const spritePosition: Sprite = {
     x: 605,
     y: 1119,
     top: 22,
-    left: 0
+    left: 0,
+    animation: 3
   },
 
   lowerArmRight: {
@@ -115,7 +128,8 @@ const spritePosition: Sprite = {
     x: 602,
     y: 1096,
     top: 43,
-    left: 3
+    left: 3,
+    animation: 5
   }
 }
 
@@ -128,6 +142,84 @@ export default function MedabotSprite({ scale = 1 }: MedabotSpriteProps) {
     const meda: JSX.Element[] = []
     Object.keys(_spritePosition).forEach(key => {
       const Part = styled.div`
+        @keyframes breathing-1 {
+          0% {
+            margin-top: ${0 * scale}px;
+          }
+          40% {
+            margin-top: ${1 * scale}px;
+          }
+          90% {
+            margin-top: ${0.5 * scale}px;
+          }
+          100% {
+            margin-top: ${0 * scale}px;
+          }
+        }
+        @keyframes breathing-2 {
+          0% {
+            margin-top: ${0 * scale}px;
+          }
+          30% {
+            margin-top: ${0 * scale}px;
+          }
+          90% {
+            margin-top: ${0.5 * scale}px;
+          }
+
+          100% {
+            margin-top: ${0 * scale}px;
+          }
+        }
+        @keyframes breathing-3 {
+          0% {
+            margin-top: ${0 * scale}px;
+          }
+          10% {
+            margin-top: ${0 * scale}px;
+          }
+          40% {
+            margin-top: ${0.75 * scale}px;
+          }
+
+          100% {
+            margin-top: ${0 * scale}px;
+          }
+        }
+
+        @keyframes breathing-4 {
+          0% {
+            margin-top: ${0 * scale}px;
+          }
+          40% {
+            margin-top: ${0 * scale}px;
+          }
+          80% {
+            margin-top: ${0.15 * scale}px;
+          }
+
+          100% {
+            margin-top: ${0 * scale}px;
+          }
+        }
+        @keyframes breathing-5 {
+          0% {
+            margin-top: ${-0.75 * scale}px;
+          }
+          10% {
+            margin-top: ${-0.75 * scale}px;
+          }
+          40% {
+            margin-top: ${-0.25 * scale}px;
+          }
+          80% {
+            margin-top: ${0 * scale}px;
+          }
+          100% {
+            margin-top: ${-0.75 * scale}px;
+          }
+        }
+
         height: ${_spritePosition[key as keyof Sprite].height * scale}px;
         width: ${_spritePosition[key as keyof Sprite].width * scale}px;
         background: url('../../src/static/images/mainSprites.png') ${_spritePosition[key as keyof Sprite].x * scale}px
@@ -137,7 +229,9 @@ export default function MedabotSprite({ scale = 1 }: MedabotSpriteProps) {
         position: absolute;
         top: ${_spritePosition[key as keyof Sprite].top * scale}px;
         left: ${_spritePosition[key as keyof Sprite].left * scale}px;
+        animation: breathing-${_spritePosition[key as keyof Sprite].animation} 2s ease-in-out infinite;
       `
+      // breathing-rotate 3s ease-in-out infinite
       meda.push(<Part />)
     })
     return meda
@@ -151,8 +245,8 @@ export default function MedabotSprite({ scale = 1 }: MedabotSpriteProps) {
     LowerBody,
     UpperLegRight,
     LowerLegRight,
-    Head,
     UpperBody,
+    Head,
     UpperArmRight,
     LowerArmRight
   ] = medabot(spritePosition)
@@ -173,8 +267,8 @@ export default function MedabotSprite({ scale = 1 }: MedabotSpriteProps) {
         {LowerBody}
         {UpperLegRight}
         {LowerLegRight}
-        {Head}
         {UpperBody}
+        {Head}
         {UpperArmRight}
         {LowerArmRight}
       </Box>
