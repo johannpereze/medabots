@@ -23,54 +23,56 @@ interface Position {
   top: number
   left: number
 }
+
+const spriteSize = { width: 45, height: 83 }
 const spritePosition: Sprite = {
   lowerLegLeft: {
     width: 21,
     height: 21,
     x: 557,
     y: 1067,
-    top: 63,
-    left: 8
+    top: 62,
+    left: 19
   },
   upperArmLeft: {
     width: 10,
     height: 22,
     x: 548,
     y: 1118,
-    top: 22,
-    left: 11
+    top: 21,
+    left: 22
   },
   lowerArmLeft: {
     width: 17,
     height: 21,
     x: 562,
     y: 1097,
-    top: 42,
-    left: 17
+    top: 41,
+    left: 28
   },
   upperLegLeft: {
     width: 8,
     height: 13,
     x: 589,
     y: 1078,
-    top: 50,
-    left: 10
+    top: 49,
+    left: 21
   },
   lowerBody: {
     width: 16,
     height: 16,
     x: 586,
     y: 1097,
-    top: 44,
-    left: 0
+    top: 43,
+    left: 11
   },
   upperLegRight: {
     width: 8,
     height: 13,
     x: 589,
     y: 1078,
-    top: 50,
-    left: 1
+    top: 49,
+    left: 12
   },
 
   lowerLegRight: {
@@ -78,8 +80,8 @@ const spritePosition: Sprite = {
     height: 21,
     x: 588,
     y: 1064,
-    top: 63,
-    left: -2
+    top: 62,
+    left: 9
   },
   head: {
     width: 30,
@@ -87,15 +89,15 @@ const spritePosition: Sprite = {
     x: 590,
     y: 1147,
     top: 0,
-    left: 0
+    left: 11
   },
   upperBody: {
     width: 16,
     height: 14,
     x: 583,
     y: 1113,
-    top: 30,
-    left: 0
+    top: 29,
+    left: 11
   },
 
   upperArmRight: {
@@ -103,8 +105,8 @@ const spritePosition: Sprite = {
     height: 21,
     x: 605,
     y: 1119,
-    top: 23,
-    left: -11
+    top: 22,
+    left: 0
   },
 
   lowerArmRight: {
@@ -112,8 +114,8 @@ const spritePosition: Sprite = {
     height: 19,
     x: 602,
     y: 1096,
-    top: 44,
-    left: -8
+    top: 43,
+    left: 3
   }
 }
 
@@ -123,7 +125,7 @@ interface MedabotSpriteProps {
 
 export default function MedabotSprite({ scale = 1 }: MedabotSpriteProps) {
   const medabot = (_spritePosition: Sprite) => {
-    const meda: any = []
+    const meda: JSX.Element[] = []
     Object.keys(_spritePosition).forEach(key => {
       const Part = styled.div`
         height: ${_spritePosition[key as keyof Sprite].height * scale}px;
@@ -141,24 +143,40 @@ export default function MedabotSprite({ scale = 1 }: MedabotSpriteProps) {
     return meda
   }
 
-  const calculateWidthHeight = (medabotSprite: Sprite, medabotScale: number) => {
-    const height =
-      (medabotSprite.head.height +
-        medabotSprite.upperBody.height +
-        medabotSprite.lowerBody.height +
-        medabotSprite.upperLegRight.height +
-        medabotSprite.lowerLegRight.height) *
-      medabotScale
-    const width = 45 * medabotScale
-    return { height, width }
-  }
-
-  const { height, width } = calculateWidthHeight(spritePosition, scale)
+  const [
+    LowerLegLeft,
+    UpperArmLeft,
+    LowerArmLeft,
+    UpperLegLeft,
+    LowerBody,
+    UpperLegRight,
+    LowerLegRight,
+    Head,
+    UpperBody,
+    UpperArmRight,
+    LowerArmRight
+  ] = medabot(spritePosition)
 
   return (
     <>
-      <Box sx={{ display: 'flex', flexDirection: 'column', ml: 8, position: 'relative', height, width }}>
-        {medabot(spritePosition)}
+      <Box
+        sx={{
+          position: 'relative',
+          height: spriteSize.height * scale,
+          width: spriteSize.width * scale
+        }}
+      >
+        {LowerLegLeft}
+        {UpperArmLeft}
+        {LowerArmLeft}
+        {UpperLegLeft}
+        {LowerBody}
+        {UpperLegRight}
+        {LowerLegRight}
+        {Head}
+        {UpperBody}
+        {UpperArmRight}
+        {LowerArmRight}
       </Box>
     </>
   )
